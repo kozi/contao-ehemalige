@@ -20,3 +20,4 @@ $GLOBALS['TL_LANG']['tl_ehemalige']['jahrgang']      = array("Jahrgang", "Abitur
 $GLOBALS['TL_LANG']['tl_ehemalige']['email']         = array("Email", "Email-Adresse");
 $GLOBALS['TL_LANG']['tl_ehemalige']['homepage']      = array("Homepage", "Link zu eigener Homepage");
 $GLOBALS['TL_LANG']['tl_ehemalige']['geburtsname']   = array("Geburtsname", "Geburtsname (falls vom Familiennamen abweichend)");
+$GLOBALS['TL_LANG']['tl_ehemalige']['info']          = array("Info", "Info");

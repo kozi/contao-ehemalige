@@ -21,15 +21,16 @@ $GLOBALS['TL_DCA']['tl_ehemalige'] = array(
     (
         'sorting' => array
         (
-            'mode'                    => 2,
-            'fields'                  => array('name DESC'),
-            'flag'                    => 1,
+            'mode'                    => 1,
+            'fields'                  => array('name', 'vorname'),
+            'flag'                    => 2,
             'panelLayout'             => 'filter; search, sort, limit',
         ),
         'label' => array
         (
-            'fields'                  => array('name', 'vorname', 'email', 'homepage', 'jahrgang'),
-            'showColumns'             => true,            
+            'fields'                  => array('name', 'vorname', 'info', 'jahrgang'),
+            'showColumns'             => true,
+            'label_callback'          => array('tl_ehemalige', 'labelCallback')
         ),
         'global_operations' => array
         (
@@ -65,7 +66,7 @@ $GLOBALS['TL_DCA']['tl_ehemalige'] = array(
 	// Palettes
     'palettes' => array
     (
-        'default'                     => '{title_legend}, name, geburtsname, vorname, email, jahrgang,'
+        'default'                     => '{title_legend}, name, geburtsname, vorname, email, email2, homepage, jahrgang'
     ),
 
 	// Fields
@@ -78,6 +79,10 @@ $GLOBALS['TL_DCA']['tl_ehemalige'] = array(
         'tstamp' => array
         (
             'sql'                     => "int(10) unsigned NOT NULL default '0'",
+        ),
+        'info' => array
+        (
+            'label'                   => $GLOBALS['TL_LANG']['tl_ehemalige']['info'],
         ),
         'name' => array
         (
@@ -132,10 +137,10 @@ $GLOBALS['TL_DCA']['tl_ehemalige'] = array(
         'homepage' => array
         (
             'label'                   => $GLOBALS['TL_LANG']['tl_ehemalige']['homepage'],
+            'inputType'               => 'text',
             'exclude'                 => true,
             'search'                  => true,
-            'sorting'                 => true,            
-            'inputType'               => 'text',
+            'sorting'                 => true,
             'eval'                    => array('mandatory'=>false, 'tl_class'=>'w50', 'rgxp' => 'url'),
             'sql'                     => "varchar(255) NOT NULL default ''",
         ),
@@ -160,8 +165,27 @@ $GLOBALS['TL_DCA']['tl_ehemalige'] = array(
 class tl_ehemalige extends \System {
 
 	public function getJahrgaenge() {	
-		$cYear = intval(\Date::parse('Y'));
-		return range (1955, $cYear);
+		$cYear  = intval(\Date::parse('Y'));
+        for($i = 1955;$i <= $cYear;$i++) {
+            $values[$i] = $i;
+        }
+		return $values;
 	}
 
+
+    public function labelCallback($row, $label, DataContainer $dc, $args = null) {
+        if ($args === null) {
+            return $label;
+        }
+
+        $args[0] .= ($row['geburtsname']) ? ' ('.$row['geburtsname'].')' : '';
+        $args[0]  = str_replace(' ', '&nbsp;', $args[0]);
+
+        // Info
+        $args[2]  = (($row['email']) ? $row['email'] : '')
+                    .(($row['email2']) ? ', '.$row['email2'] : '')
+                    .(($row['homepage']) ? ', '.$row['homepage'] : '');
+
+        return $args;
+    }
 }
