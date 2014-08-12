@@ -8,3 +8,4 @@ ClassLoader::addClasses(array(
 TemplateLoader::addFiles(array(
 	'ce_ehemalige'       => 'system/modules/ehemalige/templates'
 ));
+
