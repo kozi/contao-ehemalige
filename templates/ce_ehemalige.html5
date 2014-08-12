@@ -1,0 +1,85 @@
+<?php $this->extend('block_unsearchable'); ?>
+
+<?php $this->block('content'); ?>
+
+
+<div class="block ehemaligen_filter">
+<form method="get">
+    <select name="ehJahrgang" onchange="submit()">
+        <option value="">Jahrgang wählen...</option>
+        <?php foreach($this->arrJahrgang as $entry): ?>
+            <option <?php echo $entry['sel'];?>value="<?php echo $entry['key']; ?>"><?php echo $entry['val']; ?></option>
+        <?php endforeach; ?>
+    </select>
+    <noscript>
+        <button type="submit">Anzeigen</button>
+    </noscript>
+</form>
+<form method="get">
+    <input name="ehSearch" type="text">
+    <button type="submit">Suche</button>
+</form>
+</div>
+
+<style type="text/css">
+
+#ehemalige th {
+    background-color: #08519C;
+    color:#fff;
+    font-weight: bold;
+}
+
+#ehemalige td.name,
+#ehemalige td.vorname {
+    white-space: nowrap;
+}
+#ehemalige td.kontakt {
+    line-height: normal;
+    font-size:72%;
+}
+#ehemalige tr.odd td  { background-color:#eee; }
+#ehemalige tr.even td { background-color:#ddd; }
+#ehemalige tr.jahrgang th { text-align:center; }
+
+</style>
+
+<?php if($this->entries): ?>
+
+<table id="ehemalige" class="display" cellspacing="0" width="100%" style="">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Vorname</th>
+            <th>Kontakt</th>
+        </tr>
+    </thead>
+
+    <tbody>
+    <?php $currentJg = 0; $i=0; foreach($this->entries as $entry): ?>
+
+        <?php if($currentJg != $entry['jahrgang']) : $currentJg = $entry['jahrgang']; ?>
+            <tr class="jahrgang">
+                <th colspan="3">Jahrgang <?php echo $entry['jahrgang']; ?></th>
+            </tr>
+        <?php endif; ?>
+        <tr class="<?php echo ($i++ % 2 == 0) ? 'odd':'even'; ?>">
+            <td class="name">
+                <?php echo $entry['name']; ?>
+                <?php if($entry['geburtsname']): ?>
+                    geb. <?php echo $entry['geburtsname']; ?>
+                <?php endif; ?>
+            </td>
+            <td class="vorname"><?php echo $entry['vorname']; ?></td>
+            <td class="kontakt">
+                <?php echo $entry['kontakt']; ?>
+            </td>
+        </tr>
+    <?php endforeach; ?>
+    </tbody>
+</table>
+
+<?php endif; ?>
+
+<?php $this->endblock(); ?>
+
+
