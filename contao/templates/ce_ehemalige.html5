@@ -21,29 +21,8 @@
 </form>
 </div>
 
-<style type="text/css">
-
-#ehemalige th {
-    background-color: #08519C;
-    color:#fff;
-    font-weight: bold;
-}
-
-#ehemalige td.name,
-#ehemalige td.vorname {
-    white-space: nowrap;
-}
-#ehemalige td.kontakt {
-    line-height: normal;
-    font-size:72%;
-}
-#ehemalige tr.odd td  { background-color:#eee; }
-#ehemalige tr.even td { background-color:#ddd; }
-#ehemalige tr.jahrgang th { text-align:center; }
-
-</style>
-
 <?php if($this->entries): ?>
+<div class="block ehemaligen_liste">
 
 <table id="ehemalige" class="display" cellspacing="0" width="100%" style="">
     <thead>
@@ -77,7 +56,7 @@
     <?php endforeach; ?>
     </tbody>
 </table>
-
+</div>
 <?php endif; ?>
 
 <?php $this->endblock(); ?>
