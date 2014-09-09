@@ -17,6 +17,8 @@ class ContentEhemalige extends \ContentElement {
 	}
 
 	protected function compile() {
+        global $objPage;
+
         $arrEntries    = array();
         $arrColumn     = null;
         $arrValues     = null;
@@ -38,6 +40,8 @@ class ContentEhemalige extends \ContentElement {
                 'sel'  => ($result->jahrgang == $jahrgang) ? 'selected="selected" ' : ''
             );
         }
+
+        $this->Template->action      = $this->generateFrontendUrl($objPage->row());
         $this->Template->arrJahrgang = $arrJahrgang;
 
         if(\Input::get('ehSearch')) {
@@ -77,6 +81,6 @@ class ContentEhemalige extends \ContentElement {
                 $arrEntries[]      = $entry;
             }
         }
-        $this->Template->entries = $arrEntries;
+        $this->Template->entries     = $arrEntries;
 	}
 }

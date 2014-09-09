@@ -3,8 +3,8 @@
 <?php $this->block('content'); ?>
 
 
-<div class="block ehemaligen_filter">
-<form method="get">
+<div id="ehemalige" class="block ehemaligen_filter">
+<form method="get" action="<?php echo $this->action; ?>#ehemalige">
     <select name="ehJahrgang" onchange="submit()">
         <option value="">Jahrgang wählen...</option>
         <?php foreach($this->arrJahrgang as $entry): ?>
@@ -15,7 +15,7 @@
         <button type="submit">Anzeigen</button>
     </noscript>
 </form>
-<form method="get">
+<form method="get" action="<?php echo $this->action; ?>#ehemalige">
     <input name="ehSearch" type="text">
     <button type="submit">Suche</button>
 </form>
