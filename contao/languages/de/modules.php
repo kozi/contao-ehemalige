@@ -15,5 +15,6 @@
 
 $GLOBALS['TL_LANG']['MOD']['ehemalige']         = array("Ehemalige", "Ehemaligen Datenbank verwalten");
 
-$GLOBALS['TL_LANG']['CTE']['ehemalige']         = array('Ehemaligedatenbank', 'Anzeige der Ehemaligedatenbank');
+$GLOBALS['TL_LANG']['CTE']['ehemalige']          = array('Ehemaligedatenbank', 'Anzeige der Ehemaligedatenbank');
+
 

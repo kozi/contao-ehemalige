@@ -21,3 +21,7 @@ $GLOBALS['TL_LANG']['tl_ehemalige']['email']         = array("Email", "Email-Adr
 $GLOBALS['TL_LANG']['tl_ehemalige']['homepage']      = array("Homepage", "Link zu eigener Homepage");
 $GLOBALS['TL_LANG']['tl_ehemalige']['geburtsname']   = array("Geburtsname", "Geburtsname (falls vom Familiennamen abweichend)");
 $GLOBALS['TL_LANG']['tl_ehemalige']['info']          = array("Info", "Info");
+
+
+$GLOBALS['TL_LANG']['tl_ehemalige']['importCsv']     = array("CSV-Datei importieren", "CSV-Datei importieren");
+$GLOBALS['TL_LANG']['tl_ehemalige']['exportCsv']     = array("CSV-Datei exportieren", "Als CSV-Datei exportieren");

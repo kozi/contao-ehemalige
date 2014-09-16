@@ -34,13 +34,27 @@ $GLOBALS['TL_DCA']['tl_ehemalige'] = array(
         ),
         'global_operations' => array
         (
+            'import' => array
+            (
+                'label'               => &$GLOBALS['TL_LANG']['tl_ehemalige']['importCsv'],
+                'href'                => 'key=import',
+                'class'               => 'header_icon header_ehemalige_import',
+                'attributes'          => 'onclick="Backend.getScrollOffset()" accesskey="i"'
+            ),
+            'export' => array
+            (
+                'label'               => &$GLOBALS['TL_LANG']['tl_ehemalige']['exportCsv'],
+                'href'                => 'key=export',
+                'class'               => 'header_icon header_ehemalige_export',
+                'attributes'          => 'onclick="Backend.getScrollOffset()" accesskey="x"'
+            ),
             'all' => array
             (
                 'label'               => &$GLOBALS['TL_LANG']['MSC']['all'],
                 'href'                => 'act=select',
                 'class'               => 'header_edit_all',
                 'attributes'          => 'onclick="Backend.getScrollOffset()" accesskey="e"'
-            )
+            ),
         ),
         'operations' => array
         (

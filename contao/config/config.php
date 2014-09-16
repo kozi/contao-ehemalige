@@ -16,10 +16,15 @@
 $GLOBALS['BE_MOD']['content']['ehemalige'] = array(
             'tables'     => array('tl_ehemalige'),
             'icon'       => 'system/modules/ehemalige/assets/graduation-hat.png',
+            'stylesheet' => 'system/modules/ehemalige/assets/be-style.css',
+
+            'import'     => array('EhemaligenManager', 'importCsv'),
+            'export'     => array('EhemaligenManager', 'exportCsv'),
 );
 
-
-
 $GLOBALS['TL_CTE']['includes']['ehemalige'] = 'ContentEhemalige';
+
+
+
 
 

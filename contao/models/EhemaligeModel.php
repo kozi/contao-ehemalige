@@ -9,13 +9,20 @@
  */
 
 class EhemaligeModel extends \Model {
-
+    public static $ARR_CSV_HEADER = array('name', 'geburtsname', 'vorname', 'email', 'email2', 'homepage', 'jahrgang');
     /**
      * Table name
      * @var string
      */
     protected static $strTable = 'tl_ehemalige';
 
-
+    public function getCsvArray() {
+        $valueArr  = $this->row();
+        $returnArr = array();
+        foreach(static::$ARR_CSV_HEADER as $key) {
+            $returnArr[$key] = $valueArr[$key];
+        }
+        return $returnArr;
+    }
 
 }
