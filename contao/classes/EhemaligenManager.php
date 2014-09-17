@@ -11,20 +11,44 @@ use League\Csv\Writer;
 use League\Csv\Reader;
 
 class EhemaligenManager extends \System {
-    private $filenamePrefix = '/files/ehemalige/ehemalige';
+    private $filenamePrefix = 'files/ehemalige/ehemalige';
     private $filenameSuffix = '.csv';
+
     public function importCsv() {
+
+        if (\Input::get('confirm') !== '1') {
+
+            $urlYes    = \Environment::get('request').'&confirm=1';
+            $urlCancel = \Environment::get('script')."?do=ehemalige";
+            $filename  = $this->filenamePrefix.$this->filenameSuffix;
+
+            $message   = "Beim Import werden <strong>alle</strong> bisherigen Einträge gelöscht.
+            Der Import erfolgt über die Datei <strong>%s</strong>. Bitte stellen Sie sicher, dass die
+            Datei vorhanden ist. Wollen Sie den Import wirklich durchführen?<br><br>
+            <button onclick=\"location.href='%s'\">Ja</button> 
+            <button onclick=\"location.href='%s'\">Abbrechen</button><br><br>";
+
+            \Message::add(sprintf($message, $filename, $urlYes, $urlCancel), "TL_CONFIRM");
+            \Controller::redirect(\Environment::get('script')."?do=ehemalige");
+        }
+        else {
+            $this->doImport();
+        }
+    }
+
+    private function doImport() {
+
         $this->import('Database');
 
         $filename = $this->filenamePrefix.$this->filenameSuffix;
 
-        if (!file_exists(TL_ROOT.$filename)) {
+        if (!file_exists(TL_ROOT.'/'.$filename)) {
             \Message::add(sprintf('Die Datei <strong>%s</strong> existiert nicht.', $filename), 'TL_ERROR');
             \Controller::redirect(\Environment::get('script').'?do=ehemalige');
         }
 
 
-        $reader = Reader::createFromPath(TL_ROOT.$filename);
+        $reader = Reader::createFromPath(TL_ROOT.'/'.$filename);
 
         // Check for correct headers
         $headers = $reader->fetchOne();
@@ -61,11 +85,14 @@ class EhemaligenManager extends \System {
         $message        = '%s Einträge in Datei <strong>%s</strong> exportiert.';
         $filename       = $this->filenamePrefix.$this->filenameSuffix;
 
-        if (file_exists(TL_ROOT.$filename)) {
+        if (file_exists(TL_ROOT.'/'.$filename)) {
             $filename = $this->filenamePrefix.'-'.\Date::parse('Y-m-d_h-i-s').$this->filenameSuffix;
         }
 
-        $writer     = Writer::createFromPath(TL_ROOT.$filename, 'w+');
+        $objFile = new \Contao\File($filename);
+        $objFile->close();
+
+        $writer     = Writer::createFromPath(TL_ROOT.'/'.$filename, 'w+');
         $collection = \EhemaligeModel::findAll(array('order' => 'name ASC'));
 
         // CSV-Header schreiben
