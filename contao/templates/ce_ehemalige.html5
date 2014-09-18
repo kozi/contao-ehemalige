@@ -16,8 +16,8 @@
     </noscript>
 </form>
 <form method="get" action="<?php echo $this->action; ?>#ehemalige">
-    <input name="ehSearch" type="text">
-    <button type="submit">Suche</button>
+    <input type="text" name="ehSearch">
+    <input type="submit" value="Suche">
 </form>
 </div>
 
