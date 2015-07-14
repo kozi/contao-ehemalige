@@ -1,5 +1,5 @@
 {
-    "name": "martin-kozianka/ehemalige",
+    "name": "martin-kozianka/contao-ehemalige",
     "description": "Extension for contao",
     "keywords": [
         "contao",
@@ -18,14 +18,14 @@
     ],  
     "support": {
         "email": "martin@kozianka.de",
-        "issues": "https://github.com/kozi/ehemalige/issues",
+        "issues": "https://github.com/kozi/contao-ehemalige/issues",
         "irc": "irc://irc.freenode.org/contao.dev",
-        "source": "https://github.com/kozi/ehemalige"
+        "source": "https://github.com/kozi/contao-ehemalige"
     },
     "require": {
-        "php": ">=5.4",
-        "contao/core": "~3",
-        "league/csv": "~6"
+        "php": ">=5.5",
+        "contao/core": ">=3.4",
+        "league/csv": "~7"
     },
     "minimum-stability": "dev",
     "prefer-stable": true,
