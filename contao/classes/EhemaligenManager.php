@@ -3,21 +3,22 @@
 /**
  * Class EhemaligenManager
  *
- * @copyright  Martin Kozianka 2014
+ * @copyright  Martin Kozianka 2014-2015
  * @author     Martin Kozianka <http://kozianka.de>
  * @package    ehemalige
  */
 use League\Csv\Writer;
 use League\Csv\Reader;
 
-class EhemaligenManager extends \System {
+class EhemaligenManager extends \System
+{
     private $filenamePrefix = 'files/ehemalige/ehemalige';
     private $filenameSuffix = '.csv';
 
-    public function importCsv() {
-
-        if (\Input::get('confirm') !== '1') {
-
+    public function importCsv()
+    {
+        if (\Input::get('confirm') !== '1')
+        {
             $urlYes    = \Environment::get('request').'&confirm=1';
             $urlCancel = \Environment::get('script')."?do=ehemalige";
             $filename  = $this->filenamePrefix.$this->filenameSuffix;
@@ -31,18 +32,20 @@ class EhemaligenManager extends \System {
             \Message::add(sprintf($message, $filename, $urlYes, $urlCancel), "TL_CONFIRM");
             \Controller::redirect(\Environment::get('script')."?do=ehemalige");
         }
-        else {
+        else
+        {
             $this->doImport();
         }
     }
 
-    private function doImport() {
-
+    private function doImport()
+    {
         $this->import('Database');
 
         $filename = $this->filenamePrefix.$this->filenameSuffix;
 
-        if (!file_exists(TL_ROOT.'/'.$filename)) {
+        if (!file_exists(TL_ROOT.'/'.$filename))
+        {
             \Message::add(sprintf('Die Datei <strong>%s</strong> existiert nicht.', $filename), 'TL_ERROR');
             \Controller::redirect(\Environment::get('script').'?do=ehemalige');
         }
@@ -52,8 +55,10 @@ class EhemaligenManager extends \System {
 
         // Check for correct headers
         $headers = $reader->fetchOne();
-        foreach(\EhemaligeModel::$ARR_CSV_HEADER as $key) {
-            if (!in_array($key, $headers)) {
+        foreach(\EhemaligeModel::$ARR_CSV_HEADER as $key)
+        {
+            if (!in_array($key, $headers))
+            {
                 \Message::add(sprintf('Der Schlüssel <strong>%s</strong> fehlt in der Kopfzeile <strong>%s</strong> in der Datei %s.',
                     $key, implode(', ', $headers), $filename), 'TL_ERROR');
                 \Controller::redirect(\Environment::get('script').'?do=ehemalige');
@@ -64,9 +69,10 @@ class EhemaligenManager extends \System {
 
         $arrRows = $reader->setOffset(1)->fetchAssoc($headers);
         $count = 0;
-        foreach($arrRows as $row) {
-
-            if ($row['name'] !== null && strlen($row['name']) > 0 ) {
+        foreach($arrRows as $row)
+        {
+            if ($row['name'] !== null && strlen($row['name']) > 0 )
+            {
                 $row['tstamp'] = time();
                 $objEhemalige = new \EhemaligeModel();
                 $objEhemalige->setRow($row);
@@ -81,11 +87,13 @@ class EhemaligenManager extends \System {
 
     }
 
-    public function exportCsv() {
+    public function exportCsv()
+    {
         $message        = '%s Einträge in Datei <strong>%s</strong> exportiert.';
         $filename       = $this->filenamePrefix.$this->filenameSuffix;
 
-        if (file_exists(TL_ROOT.'/'.$filename)) {
+        if (file_exists(TL_ROOT.'/'.$filename))
+        {
             $filename = $this->filenamePrefix.'-'.\Date::parse('Y-m-d_h-i-s').$this->filenameSuffix;
         }
 
@@ -93,12 +101,13 @@ class EhemaligenManager extends \System {
         $objFile->close();
 
         $writer     = Writer::createFromPath(TL_ROOT.'/'.$filename, 'w+');
-        $collection = \EhemaligeModel::findAll(array('order' => 'name ASC'));
+        $collection = \EhemaligeModel::findAll(['order' => 'name ASC']);
 
         // CSV-Header schreiben
         $writer->insertOne(EhemaligeModel::$ARR_CSV_HEADER);
         $count = 0;
-        foreach($collection as $objEhemalige) {
+        foreach($collection as $objEhemalige)
+        {
             // CSV-Zeilen schreiben
             $writer->insertOne($objEhemalige->getCsvArray());
             $count++;

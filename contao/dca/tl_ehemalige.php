@@ -176,19 +176,23 @@ $GLOBALS['TL_DCA']['tl_ehemalige'] = array(
 );
 
 
-class tl_ehemalige extends \System {
-
-	public function getJahrgaenge() {	
+class tl_ehemalige extends \System
+{
+	public function getJahrgaenge()
+    {
 		$cYear  = intval(\Date::parse('Y'));
-        for($i = 1955;$i <= $cYear;$i++) {
+        for($i = 1955;$i <= $cYear;$i++)
+        {
             $values[$i] = $i;
         }
 		return $values;
 	}
 
 
-    public function labelCallback($row, $label, DataContainer $dc, $args = null) {
-        if ($args === null) {
+    public function labelCallback($row, $label, DataContainer $dc, $args = null)
+    {
+        if ($args === null)
+        {
             return $label;
         }
 

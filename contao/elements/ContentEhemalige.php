@@ -3,75 +3,89 @@
 /**
  * Class ContentEhemalige
  *
- * @copyright  Martin Kozianka 2014
+ * @copyright  Martin Kozianka 2014-2015
  * @author     Martin Kozianka <http://kozianka.de>
  * @package    ehemalige
  */
 
-class ContentEhemalige extends \ContentElement {
-
+class ContentEhemalige extends \ContentElement
+{
 	protected $strTemplate = 'ce_ehemalige';
 
-	public function generate() {
+	public function generate()
+    {
 		return parent::generate();
 	}
 
-	protected function compile() {
+	protected function compile()
+    {
         global $objPage;
 
-        $arrEntries    = array();
+        $arrEntries    = [];
         $arrColumn     = null;
         $arrValues     = null;
 
         $jahrgang      = \Input::get('ehJahrgang');
-        $arrJahrgang   = array(
-            array('key' => 'all','val' => 'Alle Jahrgänge anzeigen','sel' => ('all' == $jahrgang) ? 'selected="selected" ' : '')
-        );
+        $arrJahrgang   = [
+            ['key' => 'all','val' => 'Alle Jahrgänge anzeigen','sel' => ('all' == $jahrgang) ? 'selected="selected" ' : '']
+        ];
 
-        if (\Input::get('ehJahrgang') === '') {
+        if (\Input::get('ehJahrgang') === '')
+        {
             $this->redirect($this->addToUrl('ehJahrgang='));
         }
 
         $result = $this->Database->execute("SELECT DISTINCT jahrgang from tl_ehemalige ORDER BY jahrgang ASC");
-        while($result->next()) {
-            $arrJahrgang[] = array(
+
+        while($result->next())
+        {
+            $arrJahrgang[] = [
                 'key'  => $result->jahrgang,
                 'val'  => $result->jahrgang,
                 'sel'  => ($result->jahrgang == $jahrgang) ? 'selected="selected" ' : ''
-            );
+            ];
         }
 
         $this->Template->action      = $this->generateFrontendUrl($objPage->row());
         $this->Template->arrJahrgang = $arrJahrgang;
 
-        if(\Input::get('ehSearch')) {
+        if(\Input::get('ehSearch'))
+        {
             $filter     = '%'.trim(\Input::get('ehSearch')).'%';
-            $arrColumn  = array("name LIKE ? OR vorname LIKE  ? OR email LIKE  ? OR email2 LIKE  ?
-                            OR geburtsname LIKE ? OR homepage LIKE ? OR jahrgang LIKE ?");
-            $arrValues = array($filter, $filter, $filter, $filter, $filter, $filter, $filter);
+            $arrColumn  = ["name LIKE ? OR vorname LIKE  ? OR email LIKE  ? OR email2 LIKE  ?
+                            OR geburtsname LIKE ? OR homepage LIKE ? OR jahrgang LIKE ?"];
+            $arrValues = [$filter, $filter, $filter, $filter, $filter, $filter, $filter];
             $strOrder  = 'jahrgang ASC, name ASC';
-        } elseif($jahrgang === 'all') {
-            $strOrder   = 'jahrgang ASC, name ASC';
-        } elseif($jahrgang) {
-            $arrColumn  = array("jahrgang = ?");
-            $arrValues  = array($jahrgang);
+        }
+        elseif($jahrgang === 'all')
+        {
             $strOrder   = 'jahrgang ASC, name ASC';
         }
-        else {
+        elseif($jahrgang)
+        {
+            $arrColumn  = ["jahrgang = ?"];
+            $arrValues  = [$jahrgang];
+            $strOrder   = 'jahrgang ASC, name ASC';
+        }
+        else
+        {
             // Nothing to do!
             return;
         }
 
-        $ehemaligeCollection = \EhemaligeModel::findAll(array(
+        $ehemaligeCollection = \EhemaligeModel::findAll([
             'column'  => $arrColumn,
             'value'   => $arrValues,
             'order'   => $strOrder,
-        ));
+        ]);
+
         $tmplEmail = '{{email::%s}}';
         $tmplHp    = '<a href="%s" target="_blank">%s</a>';
-        if ($ehemaligeCollection) {
-            foreach($ehemaligeCollection as $eObj) {
 
+        if ($ehemaligeCollection)
+        {
+            foreach($ehemaligeCollection as $eObj)
+            {
                 $entry             = $eObj->row();
 
                 $entry['kontakt']  = ($eObj->email) ? sprintf($tmplEmail, $eObj->email) : '';
