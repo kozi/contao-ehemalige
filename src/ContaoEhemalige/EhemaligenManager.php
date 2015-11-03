@@ -1,11 +1,11 @@
-<?php
+<?php namespace ContaoEhemalige;
 
 /**
  * Class EhemaligenManager
  *
  * @copyright  Martin Kozianka 2014-2015
  * @author     Martin Kozianka <http://kozianka.de>
- * @package    ehemalige
+ * @package    contao-ehemalige
  */
 use League\Csv\Writer;
 use League\Csv\Reader;

@@ -2,20 +2,19 @@
 
 <?php $this->block('content'); ?>
 
-
 <div id="ehemalige" class="block ehemaligen_filter">
-<form method="get" action="<?php echo $this->action; ?>#ehemalige">
+<form method="get" action="<?=$this->action?>#ehemalige">
     <select name="ehJahrgang" onchange="submit()">
         <option value="">Jahrgang wählen...</option>
         <?php foreach($this->arrJahrgang as $entry): ?>
-            <option <?php echo $entry['sel'];?>value="<?php echo $entry['key']; ?>"><?php echo $entry['val']; ?></option>
+            <option <?=$entry['sel']?>value="<?=$entry['key']?>"><?=$entry['val']?></option>
         <?php endforeach; ?>
     </select>
     <noscript>
         <button type="submit">Anzeigen</button>
     </noscript>
 </form>
-<form method="get" action="<?php echo $this->action; ?>#ehemalige">
+<form method="get" action="<?=$this->action?>#ehemalige">
     <input type="text" name="ehSearch">
     <input type="submit" value="Suche">
 </form>
@@ -38,19 +37,19 @@
 
         <?php if($currentJg != $entry['jahrgang']) : $currentJg = $entry['jahrgang']; ?>
             <tr class="jahrgang">
-                <th colspan="3">Jahrgang <?php echo $entry['jahrgang']; ?></th>
+                <th colspan="3">Jahrgang <?=$entry['jahrgang']?></th>
             </tr>
         <?php endif; ?>
-        <tr class="<?php echo ($i++ % 2 == 0) ? 'odd':'even'; ?>">
+        <tr class="<?=(($i++ % 2 == 0) ? 'odd':'even')?>">
             <td class="name">
-                <?php echo $entry['name']; ?>
+                <?=$entry['name']?>
                 <?php if($entry['geburtsname']): ?>
-                    geb. <?php echo $entry['geburtsname']; ?>
+                    geb. <?=$entry['geburtsname']?>
                 <?php endif; ?>
             </td>
-            <td class="vorname"><?php echo $entry['vorname']; ?></td>
+            <td class="vorname"><?=$entry['vorname']?></td>
             <td class="kontakt">
-                <?php echo $entry['kontakt']; ?>
+                <?=$entry['kontakt']?>
             </td>
         </tr>
     <?php endforeach; ?>

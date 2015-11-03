@@ -1,11 +1,11 @@
-<?php
+<?php namespace ContaoEhemalige\Elements;
 
 /**
  * Class ContentEhemalige
  *
  * @copyright  Martin Kozianka 2014-2015
  * @author     Martin Kozianka <http://kozianka.de>
- * @package    ehemalige
+ * @package    contao-ehemalige
  */
 
 class ContentEhemalige extends \ContentElement
@@ -95,6 +95,6 @@ class ContentEhemalige extends \ContentElement
                 $arrEntries[]      = $entry;
             }
         }
-        $this->Template->entries     = $arrEntries;
+        $this->Template->entries = $arrEntries;
 	}
 }
