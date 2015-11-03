@@ -47,8 +47,8 @@ class ContentEhemalige extends \ContentElement
                 'sel'  => ($result->jahrgang == $jahrgang) ? 'selected="selected" ' : ''
             ];
         }
-
-        $this->Template->action      = $this->generateFrontendUrl($objPage->row());
+        
+        $this->Template->action      = ($objPage) ? $this->generateFrontendUrl($objPage->row()) : '#NOT_FOUND';
         $this->Template->arrJahrgang = $arrJahrgang;
 
         if(\Input::get('ehSearch'))
