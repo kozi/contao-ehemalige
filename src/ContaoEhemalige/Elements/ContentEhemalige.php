@@ -47,7 +47,7 @@ class ContentEhemalige extends \ContentElement
                 'sel'  => ($result->jahrgang == $jahrgang) ? 'selected="selected" ' : ''
             ];
         }
-        
+
         $this->Template->action      = ($objPage) ? $this->generateFrontendUrl($objPage->row()) : '#NOT_FOUND';
         $this->Template->arrJahrgang = $arrJahrgang;
 
@@ -92,7 +92,7 @@ class ContentEhemalige extends \ContentElement
 
                 $entry['kontakt']  = ($eObj->email) ? sprintf($tmplEmail, $eObj->email) : '';
                 $entry['kontakt'] .= ($eObj->email2) ? ', '.sprintf($tmplEmail, $eObj->email2) : '';
-                $entry['kontakt'] .= ($eObj->homepage) ? ', '.sprintf($tmplHp, $eObj->homepage, \String::substr($eObj->homepage, 32)) : '';
+                $entry['kontakt'] .= ($eObj->homepage) ? ', '.sprintf($tmplHp, $eObj->homepage, \StringUtil::substr($eObj->homepage, 32)) : '';
 
                 $arrEntries[]      = $entry;
             }
