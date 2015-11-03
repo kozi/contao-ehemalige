@@ -7,8 +7,10 @@
  * @author     Martin Kozianka <http://kozianka.de>
  * @package    contao-ehemalige
  */
+use ContaoEhemalige\Models\EhemaligeModel;
 use League\Csv\Writer;
 use League\Csv\Reader;
+
 
 class EhemaligenManager extends \System
 {
@@ -55,7 +57,7 @@ class EhemaligenManager extends \System
 
         // Check for correct headers
         $headers = $reader->fetchOne();
-        foreach(\EhemaligeModel::$ARR_CSV_HEADER as $key)
+        foreach(EhemaligeModel::$ARR_CSV_HEADER as $key)
         {
             if (!in_array($key, $headers))
             {
@@ -74,7 +76,7 @@ class EhemaligenManager extends \System
             if ($row['name'] !== null && strlen($row['name']) > 0 )
             {
                 $row['tstamp'] = time();
-                $objEhemalige = new \EhemaligeModel();
+                $objEhemalige = new EhemaligeModel();
                 $objEhemalige->setRow($row);
                 $objEhemalige->save();
                 $count++;
@@ -101,7 +103,7 @@ class EhemaligenManager extends \System
         $objFile->close();
 
         $writer     = Writer::createFromPath(TL_ROOT.'/'.$filename, 'w+');
-        $collection = \EhemaligeModel::findAll(['order' => 'name ASC']);
+        $collection = EhemaligeModel::findAll(['order' => 'name ASC']);
 
         // CSV-Header schreiben
         $writer->insertOne(EhemaligeModel::$ARR_CSV_HEADER);

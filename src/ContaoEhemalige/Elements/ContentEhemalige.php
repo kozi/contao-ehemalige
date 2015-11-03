@@ -8,6 +8,8 @@
  * @package    contao-ehemalige
  */
 
+use ContaoEhemalige\Models\EhemaligeModel;
+
 class ContentEhemalige extends \ContentElement
 {
 	protected $strTemplate = 'ce_ehemalige';
@@ -73,7 +75,7 @@ class ContentEhemalige extends \ContentElement
             return;
         }
 
-        $ehemaligeCollection = \EhemaligeModel::findAll([
+        $ehemaligeCollection = EhemaligeModel::findAll([
             'column'  => $arrColumn,
             'value'   => $arrValues,
             'order'   => $strOrder,
